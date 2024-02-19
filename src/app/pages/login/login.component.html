@@ -1,0 +1,38 @@
+<!-- Login Start -->
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="login-banner-section">
+            <img src=".\assets\images\login-banner.png" alt="boy on desk image">
+            <h1><span></span> Incredible Service, Incredible right.</h1>
+            <h3>We feeling the joy of Serving you Best</h3>
+        </div>
+        <!-- Login Form Start -->
+        <div class="login-form-section">
+            <img src=".\assets\images\login-logo.png" alt="logo">
+            <h3>Welcome to Company!</h3>
+            <h5>Login into your account</h5>
+            <mat-form-field appearance="outline" class="w100">
+                <mat-label>Username</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w100">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" title="show password">
+                    <mat-icon class="eye-icon" [ngStyle]="{'color':'#9C9C9C'}">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <div class="remember-password">
+                <mat-checkbox color="primary">Remember me</mat-checkbox>
+                <a href="" title="forgot password">Forgot Password ?</a>
+            </div>
+
+            <button mat-flat-button color="primary" class="uppercase w100" title="login">Login</button>
+            <span class='sign-up'>New user ? <a routerLink="/register" title="sign up"> SIGN UP</a></span>
+        </div>
+        <!-- Login Form End -->
+    </div>
+</div>
+<!-- Login End -->
