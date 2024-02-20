@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { UserService } from '../../shared/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertService } from '../../shared/components/alert/alert.service';
+import { email, mob, name, pass } from '../../shared/regexRules';
 
 @Component({
   selector: 'app-register',
@@ -33,28 +34,48 @@ import { AlertService } from '../../shared/components/alert/alert.service';
 export class RegisterComponent {
 
   hide = true;
-  // userModel = new user();
+  hideConfirm = true;
   registerForm !: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      mobile: ['', Validators.required]
+      firstname: ['', [Validators.required]],
+      lastname: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern(email)]],
+      password: ['', [Validators.required, Validators.pattern(pass)]],
+      confirmPassword: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern(mob)]]
+    }, {
+      validator: this.passwordMatchValidator
     });
   }
 
+  //confirm password validator function
+  passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+
+    if (password !== confirmPassword) {
+      form.get('confirmPassword')?.setErrors({ 'passwordMismatch': true });
+    } else {
+      form.get('confirmPassword')?.setErrors(null);
+    }
+    return null;
+  }
+
+  //register user
   register() {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
     }
 
-    this.userService.executeUserService(this.registerForm.value, 'register')
+    const formData = { ...this.registerForm.value };
+    delete formData.confirmPassword;
+
+    this.userService.executeUserService(formData, 'register')
       .subscribe({
         next: (v) => {
           this.alertService.showAlert("Please check your mail to varify your email", 'default', 10000);
@@ -63,7 +84,6 @@ export class RegisterComponent {
           this.alertService.showAlert(e.error.message, 'error');
         },
       });
-
   }
 
 }
