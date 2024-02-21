@@ -14,4 +14,8 @@ export class UserService {
   executeUserService(data : any, url : string){
     return this.http.post(environment.url + 'user/' + url, data);
   }
+
+  executeGetUserService( url : string){
+    return this.http.get(environment.url + 'user/' + url);
+  }
 }

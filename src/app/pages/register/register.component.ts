@@ -78,7 +78,7 @@ export class RegisterComponent {
     this.userService.executeUserService(formData, 'register')
       .subscribe({
         next: (v) => {
-          this.alertService.showAlert("Please check your mail to varify your email", 'default', 10000);
+          this.alertService.showAlert("Please check your mail to verify your email", 'default', 10000);
         },
         error: (e) => {
           this.alertService.showAlert(e.error.message, 'error');

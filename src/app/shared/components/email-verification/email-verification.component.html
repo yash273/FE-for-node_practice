@@ -1,0 +1,27 @@
+<!-- <ng-container *ngIf="isSuccess == true">
+  <h1 style="color: green">{{ message }}</h1>
+</ng-container>
+
+<ng-container *ngIf="isSuccess == false">
+  <h1 style="color: red">{{ message }}</h1>
+</ng-container> -->
+<div class="outer-wrapper">
+    <div class="page-container">
+        <div class="page-space" style="display: flex;">
+            <div class="message-container" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
+                
+                <!-- <img src="https://giphy.com/embed/AR1auiuk6pc5wiCPat" alt=""> -->
+                <div class="icon-back">
+                <mat-icon class="icon" *ngIf="isSuccess">check_circle</mat-icon>
+                <mat-icon class="icon" *ngIf="!isSuccess">cancel</mat-icon>
+            </div>
+                <!-- <h1>{{ isSuccess ? 'Success' : 'Error' }}</h1> -->
+                <p class="message">{{ message }}</p>
+              </div>
+            </div>
+            </div>
+            </div>
+
+
+
+  
