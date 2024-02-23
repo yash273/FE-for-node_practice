@@ -4,11 +4,12 @@ import { UserService } from '../../user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-email-verification',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, MatIconModule],
+  imports: [HttpClientModule, MatButtonModule, CommonModule, MatIconModule],
   providers: [UserService],
   templateUrl: './email-verification.component.html',
   styleUrl: './email-verification.component.scss'

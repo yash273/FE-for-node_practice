@@ -1,27 +1,27 @@
-<!-- <ng-container *ngIf="isSuccess == true">
-  <h1 style="color: green">{{ message }}</h1>
-</ng-container>
-
-<ng-container *ngIf="isSuccess == false">
-  <h1 style="color: red">{{ message }}</h1>
-</ng-container> -->
 <div class="outer-wrapper">
-    <div class="page-container">
-        <div class="page-space" style="display: flex;">
-            <div class="message-container" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
-                
-                <!-- <img src="https://giphy.com/embed/AR1auiuk6pc5wiCPat" alt=""> -->
-                <div class="icon-back">
-                <mat-icon class="icon" *ngIf="isSuccess">check_circle</mat-icon>
-                <mat-icon class="icon" *ngIf="!isSuccess">cancel</mat-icon>
-            </div>
-                <!-- <h1>{{ isSuccess ? 'Success' : 'Error' }}</h1> -->
-                <p class="message">{{ message }}</p>
-              </div>
-            </div>
-            </div>
-            </div>
+  <img class="small-logo" src=".\assets\images\logo-small.svg" alt="logo" />
 
-
-
-  
+  <div class="page-container" style="min-height: calc(100vh - 80px)">
+    <div class="page-space" style="display: flex">
+      <div
+        class="message-container"
+        [ngClass]="{ success: isSuccess, error: !isSuccess }"
+      >
+        <div class="icon-back">
+          <mat-icon class="icon" *ngIf="isSuccess">check_circle</mat-icon>
+          <mat-icon class="icon" *ngIf="!isSuccess">cancel</mat-icon>
+        </div>
+        <p class="message">{{ message }}</p>
+        <button
+          mat-button
+          color="accent"
+          class="uppercase w100 login-btn"
+          title="login"
+          routerLink="/login"
+        >
+          Login Here
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

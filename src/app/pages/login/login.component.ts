@@ -69,7 +69,18 @@ export class LoginComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result)
+const model = {
+  email : result
+}
+        this.userService.executeUserService(model, 'forgot-password')
+        .subscribe({
+          next: (v : any ) => {
+            this.alertService.showAlert(v.message, 'success');
+          },
+          error: (e) => {
+            this.alertService.showAlert(e.error.message, 'error');
+          },
+        });
 
       }
     });
