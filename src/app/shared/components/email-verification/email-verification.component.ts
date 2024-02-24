@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { UserService } from '../../user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-email-verification',
   standalone: true,
-  imports: [HttpClientModule, MatButtonModule, CommonModule, MatIconModule],
+  imports: [HttpClientModule, MatButtonModule, CommonModule, MatIconModule, RouterModule],
   providers: [UserService],
   templateUrl: './email-verification.component.html',
   styleUrl: './email-verification.component.scss'

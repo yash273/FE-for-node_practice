@@ -13,7 +13,7 @@ export const pass: RegExp = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
 // - .{8,16}: Requires a total length between 8 and 16 characters
 
 // Regular expression to validate mobile numbers
-export const mob: RegExp = /^[0-9]{1,10}$/
+export const mob: RegExp = /^[0-9]{10}$/
 // Explanation:
 // - [0-9]: Allows only numeric characters (0-9)
 // - {1,10}: Requires a minimum of 1 and a maximum of 10 digits
