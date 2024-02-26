@@ -1,0 +1,21 @@
+<nav class="sidebar">
+    <img src=".\assets\images\nav-logo.png" alt="logo" routerLink="/dashboard" title="home">
+    <mat-divider></mat-divider>
+    <!-- <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-menu" *ngFor="let profile of profiles" title="profile">
+        <img src="{{profile.pimage}}" alt="profile image">
+        <span>
+            <h5>{{profile.pname}}</h5>
+            <span>{{profile.prole}}</span>
+        </span>
+    </button> -->
+    <!-- <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item title="my profile">My Profile</button>
+    </mat-menu> -->
+    <ul class="side-list">
+        <a routerLink="{{pages.pagelink}}" title="{{pages.pagename}}" class="side-link" routerLinkActive="active" *ngFor="let pages of sidebar" (click)="openSidebar()">
+            <img src="{{pages.icondefault}}" alt="{{pages.pagename}} icon" class="ic-default">
+            <img src="{{pages.iconactive}}" alt="active {{pages.pagename}} icon" class="ic-active">
+            <span>{{pages.pagename | titlecase}}</span>
+        </a>
+    </ul>
+</nav>

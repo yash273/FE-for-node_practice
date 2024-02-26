@@ -4,6 +4,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { EmailVerificationComponent } from './shared/components/email-verification/email-verification.component';
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { HomeComponent } from './pages/home/home.component';
+import { UserListComponent } from './pages/user/user-list/user-list.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +20,14 @@ export const routes: Routes = [
     {
         path: 'register',
         component : RegisterComponent
+    },
+    {
+        path: 'home',
+        component : HomeComponent
+    },
+    {
+        path: 'users-list',
+        component : UserListComponent
     },
     {
         path: 'verify/:token',

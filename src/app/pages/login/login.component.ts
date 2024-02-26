@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../shared/user.service';
 import { AlertService } from '../../shared/components/alert/alert.service';
@@ -35,7 +35,7 @@ export class LoginComponent {
   hide = true;
   loginForm !: FormGroup;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private userService: UserService, private alertService : AlertService) {
+  constructor(private router: Router,public dialog: MatDialog, private formBuilder: FormBuilder, private userService: UserService, private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -53,9 +53,10 @@ export class LoginComponent {
 
     this.userService.executeUserService(this.loginForm.value, 'login')
       .subscribe({
-        next: (v : any ) => {
+        next: (v: any) => {
           this.alertService.showAlert("Succesfully Logged in!", 'success');
           localStorage.setItem('token', v.token);
+          this.router.navigate([`/home`]);
         },
         error: (e) => {
           this.alertService.showAlert(e.error.message, 'error');
@@ -68,22 +69,22 @@ export class LoginComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
-const model = {
-  email : result
-}
+      if (result) {
+        const model = {
+          email: result
+        }
         this.userService.executeUserService(model, 'forgot-password')
-        .subscribe({
-          next: (v : any ) => {
-            this.alertService.showAlert(v.message, 'success');
-          },
-          error: (e) => {
-            this.alertService.showAlert(e.error.message, 'error');
-          },
-        });
+          .subscribe({
+            next: (v: any) => {
+              this.alertService.showAlert(v.message, 'success');
+            },
+            error: (e) => {
+              this.alertService.showAlert(e.error.message, 'error');
+            },
+          });
 
       }
     });
   }
-  
+
 }
