@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ForgotPasswordDialogComponent } from '../../../shared/components/forgot-password-dialog/forgot-password-dialog.component';
-import { UserService } from '../../../shared/user.service';
-import { HttpClientModule } from '@angular/common/http';
-import { AlertService } from '../../../shared/components/alert/alert.service';
 import { MatSelectModule } from '@angular/material/select';
-import { LocationService } from '../../../shared/services/location.service';
+import { AlertService } from '../../../../shared/components/alert/alert.service';
+import { ForgotPasswordDialogComponent } from '../../../../shared/components/forgot-password-dialog/forgot-password-dialog.component';
+import { LocationService } from '../../../../shared/services/location.service';
+import { UserService } from '../../../../shared/user.service';
+
 @Component({
-  selector: 'app-user-edit',
+  selector: 'app-edit',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -29,10 +30,10 @@ import { LocationService } from '../../../shared/services/location.service';
     MatSelectModule
   ],
   providers: [UserService, AlertService, LocationService],
-  templateUrl: './user-edit.component.html',
-  styleUrl: './user-edit.component.scss'
+  templateUrl: './edit.component.html',
+  styleUrl: './edit.component.scss'
 })
-export class UserEditComponent {
+export class EditComponent {
 
   userModel: any;
   userForm !: FormGroup;
@@ -40,7 +41,7 @@ export class UserEditComponent {
   states: any;
   cities: any;
   constructor(
-    public dialogRef: MatDialogRef<ForgotPasswordDialogComponent>,
+    public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -58,7 +59,7 @@ export class UserEditComponent {
       cityId: [{ value: '', disabled: true }]
     });
 
-    this.locationService.getLocation('countires').subscribe({
+    this.locationService.getLocation('new/countires').subscribe({
       next: (v: any) => {
         this.countries = v.countries
       }
@@ -72,9 +73,9 @@ export class UserEditComponent {
           lastname: [{ value: v.lastname, disabled: true }],
           email: [{ value: v.email, disabled: true }],
           mobile: [{ value: v.mobile, disabled: true }],
-          countryId: [v.countryId],
-          stateId: [v.stateId],
-          cityId: [v.cityId]
+          countryId: [v.country],
+          stateId: [v.state],
+          cityId: [v.city]
         });
 
         this.userForm.patchValue(v)
@@ -89,7 +90,12 @@ export class UserEditComponent {
 
   update(): void {
     this.dialogRef.close('true');
-    this.userService.updateUser(this.userForm.value,this.data.userId).subscribe({
+    const x = {
+      country : this.userForm.value.countryId,
+      state : this.userForm.value.stateId,
+      city : this.userForm.value.cityId,
+    }
+    this.userService.updateUser(x,this.data.userId).subscribe({
       next: (v: any) => {
       }
     })
@@ -97,7 +103,7 @@ export class UserEditComponent {
 
   getStates(event: any) {
     const countryId = this.userForm.get('countryId')?.value;
-    const link = `states/${countryId}`;
+    const link = `new/states/${countryId}`;
     this.locationService.getLocation(link).subscribe({
       next: (v: any) => {
         this.states = v.states;
@@ -107,7 +113,7 @@ export class UserEditComponent {
 
   getCities(event: any) {
     const stateId = this.userForm.get('stateId')?.value;
-    const link = `cities/${stateId}`;
+    const link = `new/cities/${stateId}`;
     this.locationService.getLocation(link).subscribe({
       next: (v: any) => {
         this.cities = v.cities;
@@ -115,5 +121,5 @@ export class UserEditComponent {
     })
   }
 
-
+  
 }

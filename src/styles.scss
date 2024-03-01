@@ -374,3 +374,5 @@ input[type="search"]::-webkit-search-results-decoration {-webkit-appearance:none
 
 
 .inner-page{margin: auto; padding: 30px; }
+.mat-mdc-table .mdc-data-table__header-cell.mat-mdc-header-cell{background-color: #EBF8FF;vertical-align: middle; @include normal-fonts(); border-bottom: 2px solid $dark-blue; }
+mat-paginator.mat-mdc-paginator{background-color: #F1FAFF; border-top: 2px solid $dark-blue;}

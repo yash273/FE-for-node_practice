@@ -1,19 +1,20 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { UserService } from '../../../shared/user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SidebarComponent } from '../../../shared/components/sidebar/sidebar.component';
-import { MatIconModule } from '@angular/material/icon';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { UserEditComponent } from '../user-edit/user-edit.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar.component';
+import { UserService } from '../../../../shared/user.service';
+import { UserEditComponent } from '../../user-edit/user-edit.component';
+import { EditComponent } from '../edit/edit.component';
 
 @Component({
-  selector: 'app-user-list',
+  selector: 'app-list',
   standalone: true,
   imports: [
     SidebarComponent, 
@@ -27,12 +28,10 @@ import { MatDialog } from '@angular/material/dialog';
     MatButtonModule
   ],
   providers: [UserService],
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.scss'
 })
-export class UserListComponent {
-
-
+export class ListComponent {
 
   displayedColumns: string[] = [
     'name',
@@ -100,7 +99,7 @@ export class UserListComponent {
     const sortField = this.sortField;
     const sortDirection = this.sortDirection;
 
-    const link = `user?page=${page}&limit=${limit}&q=${filterValue}&sortField=${sortField}&sortOrder=${sortDirection}`;
+    const link = `usernew?page=${page}&limit=${limit}&q=${filterValue}&sortField=${sortField}&sortOrder=${sortDirection}`;
 
     this.userService.executeGetPaginatedUserService(link)
       .subscribe({
@@ -116,7 +115,7 @@ export class UserListComponent {
   }
 
   editUser(userId: any){
-    const dialogRef = this.dialog.open(UserEditComponent, {
+    const dialogRef = this.dialog.open(EditComponent, {
       data: {userId : userId}
     });
 
@@ -126,4 +125,5 @@ export class UserListComponent {
       }
     });
   }
+  
 }
