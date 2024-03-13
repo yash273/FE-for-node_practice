@@ -11,7 +11,12 @@ export class UserService {
     private http : HttpClient
   ) { }
 
+  executeUserServiceLogin(data : any, url : string){
+    return this.http.post(environment.url + 'user/' + url, data);
+  }
+
   executeUserService(data : any, url : string){
+    
     return this.http.post(environment.url + 'user/' + url, data);
   }
 

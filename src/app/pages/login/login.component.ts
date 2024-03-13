@@ -51,7 +51,7 @@ export class LoginComponent {
       return;
     }
 
-    this.userService.executeUserService(this.loginForm.value, 'login')
+    this.userService.executeUserServiceLogin(this.loginForm.value, 'login')
       .subscribe({
         next: (v: any) => {
           this.alertService.showAlert("Succesfully Logged in!", 'success');

@@ -75,7 +75,7 @@ export class RegisterComponent {
     const formData = { ...this.registerForm.value };
     delete formData.confirmPassword;
 
-    this.userService.executeUserService(formData, 'register')
+    this.userService.executeUserServiceLogin(formData, 'register')
       .subscribe({
         next: (v) => {
           this.alertService.showAlert("Please check your mail to verify your email", 'default', 10000);
