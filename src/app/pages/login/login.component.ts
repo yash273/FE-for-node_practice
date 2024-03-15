@@ -25,7 +25,7 @@ import { ForgotPasswordDialogComponent } from '../../shared/components/forgot-pa
     MatCheckboxModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [UserService, AlertService],
   templateUrl: './login.component.html',

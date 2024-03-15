@@ -43,12 +43,6 @@ export class SidebarComponent {
       iconactive: './assets/images/ic-dashboard-active.svg'
     },
     {
-      pagename: 'users',
-      pagelink: '/users-list',
-      icondefault: './assets/images/ic-statistics-default.svg',
-      iconactive: './assets/images/ic-statistics-active.svg'
-    },
-    {
       pagename: 'new users',
       pagelink: '/new-users-list',
       icondefault: './assets/images/ic-statistics-default.svg',

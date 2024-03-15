@@ -2,7 +2,26 @@
   <div class="page-container" style="min-height: calc(100vh - 80px)">
     <app-sidebar></app-sidebar>
     <div class="page-space" style="display: flex">
-      <div class="inner-page"></div>
+      <div class="inner-page">
+        <mat-form-field appearance="outline" class="w100">
+          <mat-label>Country</mat-label>
+          <mat-select (selectionChange)="getStates($event)" [(value)]="selectedCountry">
+            <mat-option *ngFor="let item of countries" [value]="item._id">{{
+              item.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngFor="let item of countries; let i = index">
+          {{ i + 1 }} : {{ item.name }}
+          <br />
+        </ng-container>
+        <br />
+        <ng-container *ngFor="let item of states; let i = index">
+          {{ i + 1 }} : {{ item.name }}
+          <br />
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>

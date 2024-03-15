@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,8 +10,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar.component';
 import { UserService } from '../../../../shared/user.service';
-import { UserEditComponent } from '../../user-edit/user-edit.component';
 import { EditComponent } from '../edit/edit.component';
+import { AddressesComponent } from '../addresses/addresses.component';
 
 @Component({
   selector: 'app-list',
@@ -37,11 +37,9 @@ export class ListComponent {
     'name',
     'email',
     'mobile',
-    'country',
-    'state',
-    'city',
     'isVerified',
-    'action'
+    'action',
+    'addresses'
   ];
   dataSource = new MatTableDataSource();
   pageSizeOption = [5, 10, 20];
@@ -55,7 +53,8 @@ export class ListComponent {
 
   constructor(
     public dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private renderer: Renderer2
   ) {
 
   }
@@ -124,6 +123,44 @@ export class ListComponent {
         this.getUserData();
       }
     });
+  }
+
+  viewAddress(user:any){
+    const userModel = {
+      id: user._id,
+      firstname: user.firstname,
+      lastname: user.lastname
+    }
+    const DialogPosition = {
+      right: '40px',
+    }
+    console.log("viewAddress", userModel);
+    const dialogRef = this.dialog.open(AddressesComponent, {
+      panelClass: 'custom-dialog',
+      data: userModel,
+      position: DialogPosition,
+      minHeight: 400,
+      minWidth: 300,
+      maxWidth: 800,
+      maxHeight: 600,
+    });
+
+    dialogRef.afterOpened().subscribe(() => {
+      const overlayPane = document.querySelector('.cdk-overlay-pane');
+      if (overlayPane) {
+        this.renderer.addClass(overlayPane, 'opening');
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // if (result == 'true') {
+      //   this.getUserData();
+      // }
+
+      console.log("addresses closed")
+
+    });
+
   }
   
 }

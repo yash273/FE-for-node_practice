@@ -5,7 +5,6 @@ import { EmailVerificationComponent } from './shared/components/email-verificati
 import { ResetPasswordComponent } from './shared/components/reset-password/reset-password.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { HomeComponent } from './pages/home/home.component';
-import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { ListComponent } from './pages/user/new/list/list.component';
 
 export const routes: Routes = [
@@ -25,10 +24,6 @@ export const routes: Routes = [
     {
         path: 'home',
         component : HomeComponent
-    },
-    {
-        path: 'users-list',
-        component : UserListComponent
     },
     {
         path: 'new-users-list',
