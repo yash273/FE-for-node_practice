@@ -378,12 +378,10 @@ input[type="search"]::-webkit-search-results-decoration {-webkit-appearance:none
 mat-paginator.mat-mdc-paginator{background-color: #F1FAFF; border-top: 2px solid $dark-blue;}
 
 .custom-dialog {
-  /* Initial state offscreen to the right */
   transform: translateX(100%);
 }
 
 .custom-dialog.opening {
-  /* Transition to the screen */
   transition: transform 0.7s ease;
   transform: translateX(0);
 }

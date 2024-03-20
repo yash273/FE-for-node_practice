@@ -134,7 +134,6 @@ export class ListComponent {
     const DialogPosition = {
       right: '40px',
     }
-    console.log("viewAddress", userModel);
     const dialogRef = this.dialog.open(AddressesComponent, {
       panelClass: 'custom-dialog',
       data: userModel,

@@ -10,7 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatCardModule} from '@angular/material/card';
+import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,7 +19,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
     ],
   providers: [UserService, AlertService, LocationService],
   templateUrl: './home.component.html',
@@ -27,9 +29,11 @@ import { MatSelectModule } from '@angular/material/select';
 export class HomeComponent {
   
   countries: any = [];
-  states: any = [];
+  states : any = [];
   selectedCountry:any;
-
+  chart: any;
+  statesName:any;
+  usersPerState: any;
   constructor(
     private userService: UserService,
     private locationService: LocationService
@@ -50,12 +54,64 @@ export class HomeComponent {
   getStates(event : any) {
     const countryId = event.value;
     this.selectedCountry = event.value;
-    const link = `new/states/${countryId}`;
+    const link = `new/user_per_states/${countryId}`;
     this.locationService.getLocation(link)
     .subscribe({
       next: (v: any) => {
         this.states = v.states;
+        this.statesName = this.states.map((s : any) => s.name);
+        this.usersPerState = this.states.map((u : any) => u.usersCount);
+        console.log('this.usersPerState', this.usersPerState)
+        this.chart?.destroy();
+        this.createChart();
       }
     })
+  }
+
+  createChart(){
+  const maxValue = Math.max(... this.usersPerState)
+    this.chart = new Chart("MyChart", {
+      type: 'bar', 
+      data: {
+        labels: this.statesName, 
+	       datasets: [
+          {
+            label: "Users",
+            data: this.usersPerState,
+            backgroundColor: '#FFB0C1',
+            borderColor: '#FF6384',
+            borderWidth: 2,
+            borderRadius: 5,
+            borderSkipped: false,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Users per State'
+          }
+        },
+        scales: {
+          y: {
+            title: {
+              display: true,
+              text: 'Value'
+            },
+            min: 0,
+            max: maxValue,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      },
+      
+    });
   }
 }

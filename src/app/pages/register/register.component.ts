@@ -11,6 +11,8 @@ import { UserService } from '../../shared/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { email, mob, name, pass } from '../../shared/regexRules';
+import { MatSelectModule } from '@angular/material/select';
+import { LocationService } from '../../shared/services/location.service';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +28,7 @@ import { email, mob, name, pass } from '../../shared/regexRules';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatSelectModule
   ],
   providers: [UserService, AlertService],
   templateUrl: './register.component.html',
@@ -36,8 +39,11 @@ export class RegisterComponent {
   hide = true;
   hideConfirm = true;
   registerForm !: FormGroup;
-
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private alertService: AlertService) { }
+  countries : any;
+  states : any;
+  cities : any;
+  constructor(private formBuilder: FormBuilder,     private userService: UserService,
+    private locationService: LocationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -46,9 +52,18 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.pattern(email)]],
       password: ['', [Validators.required, Validators.pattern(pass)]],
       confirmPassword: ['', Validators.required],
-      mobile: ['', [Validators.required, Validators.pattern(mob)]]
+      mobile: ['', [Validators.required, Validators.pattern(mob)]],
+      country: [ '', Validators.required ],
+      state: [ '', Validators.required ],
+      city: ['', Validators.required ]
     }, {
       validator: this.passwordMatchValidator
+    });
+
+    this.locationService.getLocation('new/countires').subscribe({
+      next: (v: any) => {
+        this.countries = v.countries
+      }
     });
   }
 
@@ -86,4 +101,23 @@ export class RegisterComponent {
       });
   }
 
+  getStates(event: any) {
+    const countryId = this.registerForm.get('country')?.value;
+    const link = `new/states/${countryId}`;
+    this.locationService.getLocation(link).subscribe({
+      next: (v: any) => {
+        this.states = v.states;
+      }
+    })
+  }
+
+  getCities(event: any) {
+    const stateId = this.registerForm.get('state')?.value;
+    const link = `new/cities/${stateId}`;
+    this.locationService.getLocation(link).subscribe({
+      next: (v: any) => {
+        this.cities = v.cities;
+      }
+    })
+  }
 }
